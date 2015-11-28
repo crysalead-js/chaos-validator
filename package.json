@@ -1,0 +1,57 @@
+{
+  "name": "chaos-validator",
+  "version": "1.0.0",
+  "description": "Validation Library.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/crysalead-js/chaos-validator.git"
+  },
+  "keywords": [
+    "validation"
+  ],
+  "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "mocha --compilers babel:babel-core/register",
+    "coverage-report": "babel-node node_modules/isparta/bin/isparta cover _mocha --i \"src/**/*.js\"",
+    "push-coverage": "cat ./coverage/lcov.info | coveralls",
+    "cleanup": "rm -rf ./coverage"
+  },
+  "main": "lib/index.js",
+  "jsnext:main": "src/index.js",
+  "dependencies": {
+    "co": "^4.6.0",
+    "date-format": "0.0.2",
+    "extend-merge": "^1.0.3",
+    "string-placeholder": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.2.0",
+    "babel-core": "^6.2.1",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.1.18",
+    "babel-plugin-transform-es2015-block-scoped-functions": "^6.1.18",
+    "babel-plugin-transform-es2015-block-scoping": "^6.1.18",
+    "babel-plugin-transform-es2015-classes": "^6.2.2",
+    "babel-plugin-transform-es2015-computed-properties": "^6.1.18",
+    "babel-plugin-transform-es2015-constants": "^6.1.4",
+    "babel-plugin-transform-es2015-destructuring": "^6.1.18",
+    "babel-plugin-transform-es2015-function-name": "^6.1.18",
+    "babel-plugin-transform-es2015-literals": "^6.1.18",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.2.0",
+    "babel-plugin-transform-es2015-object-super": "^6.1.18",
+    "babel-plugin-transform-es2015-parameters": "^6.1.18",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.1.18",
+    "babel-plugin-transform-es2015-spread": "^6.1.18",
+    "babel-plugin-transform-es2015-sticky-regex": "^6.1.18",
+    "babel-plugin-transform-es2015-template-literals": "^6.1.18",
+    "babel-plugin-transform-es2015-typeof-symbol": "^6.1.18",
+    "babel-plugin-transform-es2015-unicode-regex": "^6.1.18",
+    "bluebird": "^3.0.5",
+    "chai-kahlan": "^1.0.4",
+    "coveralls": "^2.11.4",
+    "isparta": "^4.0.0",
+    "jasmine-kahlan": "^1.0.2",
+    "mocha": "^2.3.4"
+  }
+}
