@@ -156,10 +156,10 @@ describe("Validator", function() {
       co(function*() {
         this.validator.rule('title', 'not:empty');
 
-        expect(yield this.validator.validate({})).toBe(false);
+        expect(yield this.validator.validates({})).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['is required'] });
 
-        expect(yield this.validator.validate({ title: '' })).toBe(false);
+        expect(yield this.validator.validates({ title: '' })).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['must not be a empty'] });
         done();
       }.bind(this));
@@ -173,10 +173,10 @@ describe("Validator", function() {
           'not:empty': { message: 'please enter a title' }
         });
 
-        expect(yield this.validator.validate({})).toBe(false);
+        expect(yield this.validator.validates({})).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['is required'] });
 
-        expect(yield this.validator.validate({ title: '' })).toBe(false);
+        expect(yield this.validator.validates({ title: '' })).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['please enter a title'] });
         done();
       }.bind(this));
@@ -188,7 +188,7 @@ describe("Validator", function() {
       co(function*() {
         this.validator.rule('title', { 'not:empty': 'please enter a title' });
 
-        expect(yield this.validator.validate({ title: '' })).toBe(false);
+        expect(yield this.validator.validates({ title: '' })).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['please enter a title'] });
         done();
       }.bind(this));
@@ -203,10 +203,10 @@ describe("Validator", function() {
           lengthBetween: { min: 1, max: 7, message: 'must be between ${min} and ${max} character long' }
         });
 
-        expect(yield this.validator.validate({})).toBe(false);
+        expect(yield this.validator.validates({})).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['is required'] });
 
-        expect(yield this.validator.validate({ title: '' })).toBe(false);
+        expect(yield this.validator.validates({ title: '' })).toBe(false);
         expect(this.validator.errors()).toEqual({ title: [
           'please enter a title',
           'must be between 1 and 7 character long'
@@ -224,10 +224,10 @@ describe("Validator", function() {
           { lengthBetween: { min: 1, max: 7, message: 'must be between ${min} and ${max} character long' } }
         ]);
 
-        expect(yield this.validator.validate({})).toBe(false);
+        expect(yield this.validator.validates({})).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['is required'] });
 
-        expect(yield this.validator.validate({ title: '' })).toBe(false);
+        expect(yield this.validator.validates({ title: '' })).toBe(false);
         expect(this.validator.errors()).toEqual({ title: [
           'please enter a title',
           'must be between 1 and 7 character long'
@@ -247,7 +247,7 @@ describe("Validator", function() {
           }
         });
 
-        expect(yield this.validator.validate({})).toBe(true);
+        expect(yield this.validator.validates({})).toBe(true);
         expect(this.validator.errors()).toEqual({});
         done();
       }.bind(this));
@@ -264,7 +264,7 @@ describe("Validator", function() {
           }
         });
 
-        expect(yield this.validator.validate({ title: '' })).toBe(true);
+        expect(yield this.validator.validates({ title: '' })).toBe(true);
         expect(this.validator.errors()).toEqual({});
         done();
       }.bind(this));
@@ -275,7 +275,7 @@ describe("Validator", function() {
 
       co(function*() {
         this.validator.rule('title', 'not:empty');
-        expect(yield this.validator.validate({ title: 'new title' })).toBe(true);
+        expect(yield this.validator.validates({ title: 'new title' })).toBe(true);
 
         expect(this.validator.errors()).toEqual({});
         done();
@@ -293,7 +293,7 @@ describe("Validator", function() {
           }
         });
 
-        expect(yield this.validator.validate({ title: '' }, { events: 'create' })).toBe(false);
+        expect(yield this.validator.validates({ title: '' }, { events: 'create' })).toBe(false);
         expect(this.validator.errors()).toEqual({ title: ['please enter a title'] });
         done();
       }.bind(this));
@@ -310,7 +310,7 @@ describe("Validator", function() {
           }
         });
 
-        expect(yield this.validator.validate({ title: '' }, { events: 'update' })).toBe(true);
+        expect(yield this.validator.validates({ title: '' }, { events: 'update' })).toBe(true);
         expect(this.validator.errors()).toEqual({});
         done();
       }.bind(this));
@@ -322,7 +322,7 @@ describe("Validator", function() {
       co(function*() {
         this.validator.rule('emails.*', 'email');
 
-        expect(yield this.validator.validate({ emails: ['willy@boy.com', 'johnny@boy.com'] })).toBe(true);
+        expect(yield this.validator.validates({ emails: ['willy@boy.com', 'johnny@boy.com'] })).toBe(true);
         expect(this.validator.errors()).toEqual({});
         done();
       }.bind(this));
@@ -334,10 +334,10 @@ describe("Validator", function() {
       co(function*() {
         this.validator.rule('emails.*', 'email');
 
-        expect(yield this.validator.validate({ emails: ['invalid', 'johnny@boy.com'] })).toBe(false);
+        expect(yield this.validator.validates({ emails: ['invalid', 'johnny@boy.com'] })).toBe(false);
         expect(this.validator.errors()).toEqual({ 'emails.0': ['is not a valid email address'] });
 
-        expect(yield this.validator.validate({ emails: ['willy@boy.com', 'invalid'] })).toBe(false);
+        expect(yield this.validator.validates({ emails: ['willy@boy.com', 'invalid'] })).toBe(false);
         expect(this.validator.errors()).toEqual({ 'emails.1': ['is not a valid email address'] });
         done();
       }.bind(this));
@@ -349,7 +349,7 @@ describe("Validator", function() {
       co(function*() {
         this.validator.rule('people.*.email', 'email');
 
-        expect(yield this.validator.validate({
+        expect(yield this.validator.validates({
           people: [
             { email: 'willy@boy.com' },
             { email: 'johnny@boy.com' }
@@ -367,7 +367,7 @@ describe("Validator", function() {
       co(function*() {
         this.validator.rule('people.*.email', 'email');
 
-        expect(yield this.validator.validate({
+        expect(yield this.validator.validates({
           people: [
             { email: 'invalid' },
             { email: 'johnny@boy.com' }
@@ -376,7 +376,7 @@ describe("Validator", function() {
 
         expect(this.validator.errors()).toEqual({ 'people.0.email': ['is not a valid email address'] });
 
-        expect(yield this.validator.validate({
+        expect(yield this.validator.validates({
           people: [
             { email: 'willy@boy.com' },
             { email: 'invalid' }
@@ -445,7 +445,7 @@ describe("Validator", function() {
           return false;
         });
 
-        expect(yield this.validator.validate({
+        expect(yield this.validator.validates({
           accepted: '',
           alphaNumeric: '',
           boolean: '',

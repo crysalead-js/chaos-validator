@@ -14,7 +14,7 @@ import Checker from './checker';
  * validator.rule('title', [
  *   { 'not:empty': { message: 'please enter a title' } }
  * ]);
- * validator.validate({ title: 'new title' }); // Promise
+ * validator.validates({ title: 'new title' }); // Promise
  * }}}
  *
  * @see Checker class for all built-in rules
@@ -320,7 +320,7 @@ class Validator {
    *                         pass in order for the rule check to succeed.
    * @return Promise         Returns a promise.
    */
-  validate(data, options) {
+  validates(data, options) {
     return co(function* () {
       options = options || {};
       var events = options.events ? (Array.isArray(options.events) ? options.events : [options.events]) : [];
