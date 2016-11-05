@@ -1,4 +1,7 @@
-import Checker from './checker';
-import Validator from './validator';
+var Checker = require('./checker');
+var Validator = require('./validator');
 
-export { Checker, Validator };
+module.exports = {
+  Checker: Checker,
+  Validator: Validator
+};

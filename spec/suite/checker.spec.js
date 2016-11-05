@@ -1,5 +1,5 @@
-import co from 'co';
-import { Checker } from '../../src';
+var co = require('co');
+var Checker = require('../../src/checker');
 
 describe("Checker", function() {
 

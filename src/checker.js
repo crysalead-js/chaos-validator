@@ -1,6 +1,7 @@
-import co from 'co';
-import { extend, merge } from 'extend-merge';
-import dateFormat from 'date-format';
+var co = require('co');
+var extend = require('extend-merge').extend;
+var merge = require('extend-merge').merge;
+var dateFormat = require('date-format');
 
 /**
  * The `Checker` class provides static access to commonly used data validation logic.
@@ -628,4 +629,4 @@ Checker._messages = {};
 
 Checker.reset();
 
-export default Checker;
+module.exports = Checker;

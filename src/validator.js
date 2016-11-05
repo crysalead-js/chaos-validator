@@ -1,7 +1,8 @@
-import co from 'co';
-import { extend, merge } from 'extend-merge';
-import insert from 'string-placeholder';
-import Checker from './checker';
+var co = require('co');
+var extend = require('extend-merge').extend;
+var merge = require('extend-merge').merge;
+var insert = require('string-placeholder');
+var Checker = require('./checker');
 
 /**
  * The `Validator` class provides the necessary logic to perform some validation on data.
@@ -520,4 +521,4 @@ Validator._classes = {
   checker: Checker
 }
 
-export default Validator;
+module.exports = Validator;
