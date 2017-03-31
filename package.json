@@ -13,17 +13,17 @@
   "main": "src/index.js",
   "dependencies": {
     "co": "^4.6.0",
-    "date-format": "0.0.2",
-    "extend-merge": "^1.0.3",
+    "dateformat": "2.0.0",
+    "extend-merge": "^1.0.4",
     "string-placeholder": "^1.0.1"
   },
   "devDependencies": {
-    "bluebird": "^3.4.6",
+    "bluebird": "^3.5.0",
     "chai-kahlan": "^1.0.4",
-    "coveralls": "^2.11.14",
+    "coveralls": "^2.13.0",
     "jasmine-kahlan": "^1.0.2",
-    "mocha": "^3.1.2",
-    "nyc": "^8.4.0"
+    "mocha": "^3.2.0",
+    "nyc": "^10.2.0"
   },
   "scripts": {
     "coverage-report": "nyc --reporter=lcov mocha",

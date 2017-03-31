@@ -1,7 +1,7 @@
 var co = require('co');
 var extend = require('extend-merge').extend;
 var merge = require('extend-merge').merge;
-var dateFormat = require('date-format');
+var dateFormat = require('dateformat');
 
 /**
  * The `Checker` class provides static access to commonly used data validation logic.
@@ -456,7 +456,7 @@ class Checker {
         if (!(value instanceof Date)) {
           value = new Date(value);
         }
-        params.date = dateFormat('yyyy-MM-dd hh:mm:ss', after);
+        params.date = dateFormat(after, 'yyyy-mm-dd hh:MM:ss');
         return value >= after;
       },
       dateBefore: function(value, options, params) {
@@ -471,7 +471,7 @@ class Checker {
         if (!(value instanceof Date)) {
           value = new Date(value);
         }
-        params.date = dateFormat('yyyy-MM-dd hh:mm:ss', before);
+        params.date = dateFormat(before, 'yyyy-mm-dd hh:MM:ss');
         return value <= before;
       },
       decimal: function(value, options, params) {
