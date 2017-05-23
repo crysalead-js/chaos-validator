@@ -148,6 +148,7 @@ describe("Checker", function() {
         expect(yield Checker.is('empty', '12234')).toBe(false);
         expect(yield Checker.is('empty', 'dfdQSD')).toBe(false);
         expect(yield Checker.is('empty', 'こんにちは！')).toBe(false);
+        expect(yield Checker.is('empty', new Date())).toBe(false);
         done();
       });
 
@@ -794,6 +795,7 @@ describe("Checker", function() {
         expect(yield Checker.is('not:empty', 'José')).toBe(true);
         expect(yield Checker.is('not:empty', 'é')).toBe(true);
         expect(yield Checker.is('not:empty', 'π')).toBe(true);
+        expect(yield Checker.is('not:empty', new Date())).toBe(true);
 
         expect(yield Checker.is('not:empty', "\t ")).toBe(false);
         expect(yield Checker.is('not:empty', "")).toBe(false);
@@ -880,6 +882,15 @@ describe("Checker", function() {
       co(function*() {
         expect(yield Checker.is('inList', 'one', { list: ['one', 'two'] })).toBe(true);
         expect(yield Checker.is('not:inList', 'one', { list: ['one', 'two'] })).toBe(false);
+        done();
+      });
+
+    });
+
+    it("throws an exception when trying to apply a regex rules on an object", function(done) {
+
+      Checker.is('uuid', new Date()).catch(function(e) {
+        expect(e).toEqual(new Error("Regex validation rules can't be applied on objects."));
         done();
       });
 

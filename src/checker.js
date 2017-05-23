@@ -287,7 +287,13 @@ class Checker {
       }
 
       if (handlers instanceof RegExp) {
-        return handlers.test(value);
+        if (typeof value !== 'object') {
+          return handlers.test(String(value));
+        }
+        if (handlers === this.get('empty')) {
+          return !value;
+        }
+        throw new Error("Regex validation rules can't be applied on objects.");
       }
 
       var success = true;
