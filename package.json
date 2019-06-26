@@ -1,6 +1,6 @@
 {
   "name": "chaos-validator",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Validation Library.",
   "license": "MIT",
   "repository": {
@@ -15,15 +15,15 @@
     "co": "^4.6.0",
     "dateformat": "3.0.3",
     "extend-merge": "^1.0.5",
-    "string-placeholder": "^1.0.1"
+    "string-placeholder": "^1.0.2"
   },
   "devDependencies": {
-    "bluebird": "^3.5.0",
-    "chai-kahlan": "^1.0.4",
-    "coveralls": "^3.0.2",
+    "bluebird": "^3.5.5",
+    "chai-kahlan": "^2.0.0",
+    "coveralls": "^3.0.4",
     "jasmine-kahlan": "^1.0.2",
-    "mocha": "^5.2.0",
-    "nyc": "^13.0.1"
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1"
   },
   "scripts": {
     "coverage-report": "nyc --reporter=lcov mocha",
