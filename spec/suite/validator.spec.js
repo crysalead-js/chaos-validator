@@ -389,6 +389,19 @@ describe("Validator", function() {
       }.bind(this));
     });
 
+    it("allows null as a value", function(done) {
+
+      co(function*() {
+        this.validator.rule('title', { 'not:empty': 'please enter a title' });
+
+        expect(yield this.validator.validates({ title: null })).toBe(false);
+        expect(this.validator.errors()).toEqual({ title: ['please enter a title'] });
+
+        done();
+      }.bind(this));
+
+    });
+
   });
 
   describe(".message()", function() {
