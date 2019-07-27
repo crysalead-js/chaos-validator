@@ -255,6 +255,23 @@ describe("Validator", function() {
 
     });
 
+    it("passes for rules with empty data but allowed by skipNull", function(done) {
+
+      co(function*() {
+        this.validator.rule('title', {
+          'not:empty': {
+            message: 'please enter a ${field}',
+            skipNull: true
+          }
+        });
+
+        expect(yield this.validator.validates({ title: null })).toBe(true);
+        expect(this.validator.errors()).toEqual({});
+        done();
+      }.bind(this));
+
+    });
+
     it("passes for rules with empty data but allowed by skipEmpty", function(done) {
 
       co(function*() {
@@ -575,12 +592,40 @@ describe("Validator", function() {
 
   describe(".values()", function() {
 
-    it("returns the wrapped data when no path is defined", function() {
+    it("returns the extracted data when no path is defined", function() {
 
       var data = { title: 'new title' };
 
       expect(Validator.values(data)).toEqual({ '0': data });
+      expect(Validator.values(data, ['title'])).toEqual(data);
 
+    });
+
+    it("returns null data", function() {
+
+      var data = { title: null };
+
+      expect(Validator.values(data)).toEqual({ '0': data });
+      expect(Validator.values(data, ['title'])).toEqual(data);
+
+    });
+
+    it("returns the extracted data when a path is defined", function() {
+      var data = {
+        people: [
+            { email: 'willy@boy.com' },
+            { email: 'johnny@boy.com' }
+        ]
+      };
+      expect(Validator.values(data, ['people'])).toEqual(data);
+      expect(Validator.values(data, ['people', '*'])).toEqual({
+          'people.0': { email: 'willy@boy.com' },
+          'people.1': { email: 'johnny@boy.com' }
+      });
+      expect(Validator.values(data, ['people', '*', 'email'])).toEqual({
+          'people.0.email': 'willy@boy.com',
+          'people.1.email': 'johnny@boy.com'
+      });
     });
 
   });

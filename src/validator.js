@@ -238,6 +238,7 @@ class Validator {
     var defaults = {
       message: null,
       required: true,
+      skipNull: false,
       skipEmpty: false,
       format: 'any',
       not: false,
@@ -310,9 +311,12 @@ class Validator {
    *                       - `'required`' _boolean_: Represents whether the value is required to be
    *                         present in `values`. If `'required'` is set to `false`, the validation rule
    *                         will be skipped if the corresponding key is not present. Defaults to `true`.
-   *                       - `'skipEmpty'` _boolean_: Similar to `'required'`, this setting (if `true`)
-   *                         will cause the validation rule to be skipped if the corresponding value
-   *                         is empty (an empty string or `null`). Defaults to `false`.
+   *                       - `'skipNull'` _boolean_: This setting (if `true`) will cause the validation rule
+   *                         to be skipped if the corresponding value is `null`.
+   *                         Defaults to `false`.
+   *                       - `'skipEmpty'` _boolean_: This setting (if `true`) will cause the validation rule
+   *                         to be skipped if the corresponding value is empty (an empty string or `null`).
+   *                         Defaults to `false`.
    *                       - `'format'` _string_: If the validation rule has multiple format definitions
    *                         (see the `add()` or `init()` methods), the name of the format to be used
    *                         can be specified here. Additionally, two special values can be used:
@@ -359,24 +363,26 @@ class Validator {
             this._errors[field].push(error('required', rule, this._meta));
             success = false;
             break;
-          } else {
+          }
 
-            for (var key in values) {
-              var params = {};
-              var value = values[key];
+          for (var key in values) {
+            var params = {};
+            var value = values[key];
 
-              if (!value && rule.skipEmpty) {
-                continue;
+            if (value === null && rule.skipNull) {
+              continue;
+            }
+            if (!value && rule.skipEmpty) {
+              continue;
+            }
+            rule.data = data;
+            var ok = yield this.is(name, value, rule, params);
+            if (!ok) {
+              if (this._errors[key] === undefined) {
+                this._errors[key] = [];
               }
-              rule.data = data;
-              var ok = yield this.is(name, value, rule, params);
-              if (!ok) {
-                if (this._errors[key] === undefined) {
-                  this._errors[key] = [];
-                }
-                this._errors[key].push(error(name, extend({}, rule, params), this._meta));
-                success = false;
-              }
+              this._errors[key].push(error(name, extend({}, rule, params), this._meta));
+              success = false;
             }
           }
         }
