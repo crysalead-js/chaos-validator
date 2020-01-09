@@ -488,6 +488,90 @@ describe("Checker", function() {
 
     });
 
+    it("checks values are equals allowing null as key", function(done) {
+
+      co(function*() {
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          data: { password: null }
+        })).toBe(false);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipNullKey: true,
+          data: { password: null }
+        })).toBe(true);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipNullKey: true
+        })).toBe(true);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipNullKey: true,
+          data: { password: '' }
+        })).toBe(false);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipNullKey: true,
+          data: { password: '0' }
+        })).toBe(false);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipNullKey: true,
+          data: { password: 0 }
+        })).toBe(false);
+
+        done();
+      });
+
+    });
+
+    it("checks values are equals allowing empty as key", function(done) {
+
+      co(function*() {
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          data: { password: null }
+        })).toBe(false);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipEmptyKey: true,
+          data: { password: null }
+        })).toBe(true);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipEmptyKey: true
+        })).toBe(true);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipEmptyKey: true,
+          data: { password: '' }
+        })).toBe(true);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipEmptyKey: true,
+          data: { password: '0' }
+        })).toBe(false);
+
+        expect(yield Checker.is('equalTo', 'abcdef', {
+          key: 'password',
+          skipEmptyKey: true,
+          data: { password: 0 }
+        })).toBe(false);
+
+        done();
+      });
+
+    });
+
     it("checks emails values", function(done) {
 
       co(function*() {
