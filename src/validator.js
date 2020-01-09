@@ -369,10 +369,10 @@ class Validator {
             var params = {};
             var value = values[key];
 
-            if (value === null && rule.skipNull) {
+            if (value === null && (rule.skipNull || rule.skipEmpty)) {
               continue;
             }
-            if (!value && rule.skipEmpty) {
+            if (value === '' && rule.skipEmpty) {
               continue;
             }
             rule.data = data;

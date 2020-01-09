@@ -258,15 +258,19 @@ describe("Validator", function() {
     it("passes for rules with empty data but allowed by skipNull", function(done) {
 
       co(function*() {
-        this.validator.rule('title', {
-          'not:empty': {
-            message: 'please enter a ${field}',
+        this.validator.rule('phone', {
+          'phone': {
+            message: 'please enter a phone',
             skipNull: true
           }
         });
 
-        expect(yield this.validator.validates({ title: null })).toBe(true);
+        expect(yield this.validator.validates({ phone: null })).toBe(true);
         expect(this.validator.errors()).toEqual({});
+
+        expect(yield this.validator.validates({ phone: '' })).toBe(false);
+        expect(yield this.validator.validates({ phone: '0' })).toBe(false);
+        expect(yield this.validator.validates({ phone: 0 })).toBe(false);
         done();
       }.bind(this));
 
@@ -275,15 +279,21 @@ describe("Validator", function() {
     it("passes for rules with empty data but allowed by skipEmpty", function(done) {
 
       co(function*() {
-        this.validator.rule('title', {
-          'not:empty': {
-            message: 'please enter a ${field}',
+        this.validator.rule('phone', {
+          'phone': {
+            message: 'please enter a phone',
             skipEmpty: true
           }
         });
 
-        expect(yield this.validator.validates({ title: '' })).toBe(true);
+        expect(yield this.validator.validates({ phone: null })).toBe(true);
         expect(this.validator.errors()).toEqual({});
+
+        expect(yield this.validator.validates({ phone: '' })).toBe(true);
+        expect(this.validator.errors()).toEqual({});
+
+        expect(yield this.validator.validates({ phone: '0' })).toBe(false);
+        expect(yield this.validator.validates({ phone: 0 })).toBe(false);
         done();
       }.bind(this));
 
