@@ -432,8 +432,7 @@ class Validator {
    * @param  String base The dotted fielname path of the data.
    * @return Object      The extracted values.
    */
-  static values(data, path, base)
-  {
+  static values(data, path, base) {
     if (!path || !path.length) {
       var result = {};
       result[base ? base : '0'] = data;
@@ -441,21 +440,28 @@ class Validator {
     }
     path = path.slice();
     var field = path.shift();
+    var key, value;
 
     if (field === '*') {
       var values = {};
-      for (var key in data) {
-        extend(values, this.values(data[key], path, base + '.' + key));
+      data = (data && typeof data[Symbol.iterator] === 'function') ? (Array.isArray(data) ? data.entries() : data) : Object.entries(data);
+      console.log(data);
+      for ([key, value] of data) {
+        extend(values, this.values(value, path, base + '.' + key));
       }
       return values;
-    } else if (data[field] === undefined) {
+    }
+
+    value = (data && typeof data.get === 'function') ? data.get(field) : data[field];
+
+    if (value === undefined) {
       return {};
     } else if (!path.length) {
       var tmp = {};
-      tmp[base ? base + '.' + field : field] =  data[field];
+      tmp[base ? base + '.' + field : field] = value;
       return tmp;
     } else {
-      return this.values(data[field], path, base ? base + '.' + field : field);
+      return this.values(value, path, base ? base + '.' + field : field);
     }
   }
 
