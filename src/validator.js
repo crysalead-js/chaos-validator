@@ -445,7 +445,6 @@ class Validator {
     if (field === '*') {
       var values = {};
       data = (data && typeof data[Symbol.iterator] === 'function') ? (Array.isArray(data) ? data.entries() : data) : Object.entries(data);
-      console.log(data);
       for ([key, value] of data) {
         extend(values, this.values(value, path, base + '.' + key));
       }
